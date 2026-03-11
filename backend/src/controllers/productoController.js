@@ -21,13 +21,11 @@ class ProductoController{
             if(!producto){
               return response.status(404).json({
                     success: false,
-                    mensaje: 'El producto no existe'
+                    mensaje: 'el producto no existe perro!!!'
                 })
             }else{
-                response.json({
-                    success: true,
-                    datos: producto
-                })
+                response.json(producto)
+
             }
         }catch(error){
             console.error('Error al obtener producto por id:', error.message || error)
@@ -45,86 +43,6 @@ class ProductoController{
                 id: pedidoId
             })
         }catch(error){
-            response.status(500).json({
-                success: false,
-                error: error.message
-            })
-        }
-    }
-
-    // MÉTODOS DE ADMINISTRADOR
-    static async crearProducto(request, response){
-        try{
-            const { nombre, descripcion, precio, imagen } = request.body
-            
-            if (!nombre || !precio) {
-                return response.status(400).json({
-                    success: false,
-                    mensaje: 'Nombre y precio son requeridos'
-                })
-            }
-
-            const productoId = await Model.crearProducto({ nombre, descripcion, precio, imagen })
-            response.status(201).json({
-                success: true,
-                mensaje: 'Producto creado exitosamente',
-                id: productoId
-            })
-        }catch(error){
-            console.error('Error al crear producto:', error.message)
-            response.status(500).json({
-                success: false,
-                error: error.message
-            })
-        }
-    }
-
-    static async actualizarProducto(request, response){
-        try{
-            const { id } = request.params
-            const { nombre, descripcion, precio, imagen } = request.body
-
-            const actualizado = await Model.actualizarProducto(id, { nombre, descripcion, precio, imagen })
-            
-            if (!actualizado) {
-                return response.status(404).json({
-                    success: false,
-                    mensaje: 'Producto no encontrado'
-                })
-            }
-
-            response.json({
-                success: true,
-                mensaje: 'Producto actualizado exitosamente'
-            })
-        }catch(error){
-            console.error('Error al actualizar producto:', error.message)
-            response.status(500).json({
-                success: false,
-                error: error.message
-            })
-        }
-    }
-
-    static async eliminarProducto(request, response){
-        try{
-            const { id } = request.params
-
-            const eliminado = await Model.eliminarProducto(id)
-            
-            if (!eliminado) {
-                return response.status(404).json({
-                    success: false,
-                    mensaje: 'Producto no encontrado'
-                })
-            }
-
-            response.json({
-                success: true,
-                mensaje: 'Producto eliminado exitosamente'
-            })
-        }catch(error){
-            console.error('Error al eliminar producto:', error.message)
             response.status(500).json({
                 success: false,
                 error: error.message

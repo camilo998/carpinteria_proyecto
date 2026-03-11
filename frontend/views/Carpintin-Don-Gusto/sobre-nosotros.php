@@ -14,7 +14,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="index.html">
+                <a class="navbar-brand" href="index.php">
                     <img class="foto" src="img/logo.jpg" alt="Logotipo de Carpintín Don Gusto" style="height: 50px;">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar" aria-controls="mynavbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,10 +23,13 @@
                 <div class="collapse navbar-collapse" id="mynavbar">
                     <ul class="navbar-nav me-auto mb-2 mb-sm-0">
                         <li class="nav-item">
-                            <a class="nav-link" href="../../php/usuario/index.php">Productos</a>
+                            <a class="nav-link" href="productos.php">Productos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="sobre-nosotros.html">Sobre Nosotros</a>
+                            <a class="nav-link" href="sobre-nosotros.php">Sobre Nosotros</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="login.php">Login</a>
                         </li>
                     </ul>
                 </div>

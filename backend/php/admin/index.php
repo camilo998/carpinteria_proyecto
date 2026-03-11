@@ -1,5 +1,5 @@
 <?php
-require_once '../../../backend/php/config/db.php';
+require_once '../config/db.php';
 
 // Verificar si el usuario está logueado y es admin
 if (!isset($_SESSION['usuario_id']) || $_SESSION['usuario_rol'] !== 'admin') {
@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // Eliminar producto
 if (isset($_GET['eliminar']) && is_numeric($_GET['eliminar'])) {
     try {
-        $stmt = $pdo->prepare("UPDATE productos SET activo = 0 WHERE id = ?");
+        $stmt = $pdo->prepare("DELETE FROM productos WHERE id = ?");
         $stmt->execute([$_GET['eliminar']]);
         $success = 'Producto eliminado exitosamente';
     } catch (PDOException $e) {
@@ -79,11 +79,189 @@ $productos = $stmt->fetchAll();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel Administrativo - Carpintería Don Gusto</title>
-    <link rel="icon" href="../../../frontend/views/Carpintin-Don-Gusto/img/logo.jpg" type="image/jpg">
+    <link rel="icono" href="../../../frontend/views/Carpintin-Don-Gusto/img/logo.jpg" type="image/jpg">
     <link rel="stylesheet" href="../../../frontend/css/producto_estile.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    
+    <style>
+        .admin-section {
+            background-color: #FFF8DC;
+            border: 2px solid #D2B48C;
+            border-radius: 10px;
+            padding: 30px;
+            margin: 20px auto;
+            max-width: 1400px;
+        }
+        
+        .admin-section h2 {
+            color: #8B4513;
+            font-family: 'Arial', sans-serif;
+            border-bottom: 2px solid #D2B48C;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            color: #8B4513;
+            font-weight: bold;
+        }
+        
+        .form-control {
+            border: 1px solid #D2B48C;
+            background-color: #FAF0E6;
+        }
+        
+        .form-control:focus {
+            border-color: #8B4513;
+            box-shadow: 0 0 0 0.2rem rgba(139, 69, 19, 0.25);
+        }
+        
+        .btn-add {
+            background-color: #F4A460;
+            color: #8B4513;
+            border: 1px solid #8B4513;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        .btn-add:hover {
+            background-color: #CD853F;
+            color: white;
+        }
+        
+        .btn-edit {
+            background-color: #F4A460;
+            color: #8B4513;
+            border: 1px solid #8B4513;
+            padding: 8px 15px;
+            font-size: 14px;
+            border-radius: 5px;
+            margin-right: 5px;
+            text-decoration: none;
+        }
+        
+        .btn-edit:hover {
+            background-color: #CD853F;
+            color: white;
+        }
+        
+        .btn-delete {
+            background-color: #c0392b;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            font-size: 14px;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        
+        .btn-delete:hover {
+            background-color: #a93226;
+            color: white;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            background-color: white;
+            border-radius: 8px;
+            border: 1px solid #D2B48C;
+        }
+        
+        .product-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0;
+        }
+        
+        .product-table thead {
+            background-color: #5a3e2b;
+            color: white;
+        }
+        
+        .product-table th {
+            padding: 15px;
+            text-align: left;
+            font-weight: bold;
+            border-bottom: 2px solid #D2B48C;
+        }
+        
+        .product-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #D2B48C;
+            vertical-align: middle;
+        }
+        
+        .product-table tbody tr:hover {
+            background-color: #FAF0E6;
+        }
+        
+        .product-table img {
+            width: 120px;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 5px;
+            border: 1px solid #D2B48C;
+        }
+        
+        .product-table .nombre {
+            font-weight: bold;
+            color: #8B4513;
+            max-width: 200px;
+        }
+        
+        .product-table .descripcion {
+            color: #666;
+            font-size: 13px;
+            max-width: 300px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        .product-table .precio {
+            font-weight: bold;
+            color: #8B4513;
+            font-size: 16px;
+        }
+        
+        .product-table .categoria {
+            background-color: #d4a373;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+        }
+        
+        .product-table .actions {
+            white-space: nowrap;
+        }
+        
+        .error {
+            color: #c0392b;
+            background: #fadbd8;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border-left: 4px solid #c0392b;
+        }
+        
+        .success {
+            color: #1e8449;
+            background: #d5f5e3;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border-left: 4px solid #1e8449;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -198,10 +376,10 @@ $productos = $stmt->fetchAll();
                                         <?php 
                                         $imagen = $prod['imagen'] ?? '';
                                         if ($imagen && !str_starts_with($imagen, 'http') && !str_starts_with($imagen, '/')) {
-                                            $imagen = '/frontend/views/Carpintin-Don-Gusto/' . $imagen;
+                                            $imagen = '/carpinteria_proyecto-0.0.1/frontend/views/Carpintin-Don-Gusto/' . $imagen;
                                         }
                                         ?>
-                                        <img src="<?php echo $imagen ? htmlspecialchars($imagen) : '/frontend/views/Carpintin-Don-Gusto/img/logo.jpg'; ?>" alt="<?php echo htmlspecialchars($prod['nombre']); ?>">
+                                        <img src="<?php echo $imagen ? htmlspecialchars('/carpinteria_proyecto-0.0.1/frontend/views/Carpintin-Don-Gusto/' . $imagen) : '/carpinteria_proyecto-0.0.1/frontend/views/Carpintin-Don-Gusto/img/logo.jpg'; ?>" alt="<?php echo htmlspecialchars($prod['nombre']); ?>">
                                     </td>
                                     <td class="nombre"><?php echo htmlspecialchars($prod['nombre']); ?></td>
                                     <td class="descripcion" title="<?php echo htmlspecialchars($prod['descripcion'] ?? ''); ?>"><?php echo htmlspecialchars($prod['descripcion'] ?? 'Sin descripción'); ?></td>
@@ -221,3 +399,4 @@ $productos = $stmt->fetchAll();
     </div>
 </body>
 </html>
+

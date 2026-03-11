@@ -16,7 +16,7 @@ class ProductoModel {
             SELECT p.*, c.nombre as categoria
             FROM productos p
             INNER JOIN categorias c ON p.categoria_id = c.id
-            WHERE p.id = ?
+            WHERE p.id = ? AND p.activo = 1
         `, [id])
         return row
     }
@@ -44,50 +44,6 @@ class ProductoModel {
         await DB.query('INSERT INTO pedidos_historial (pedido_id, estado_id, comentario) VALUES (?, 1, ?)', [pedido_id, 'Pedido creado desde formulario web'])
 
         return pedido_id
-    }
-
-    // MÉTODOS DE ADMINISTRADOR
-    static async crearProducto(datos) {
-        const { nombre, descripcion, precio, imagen, categoria_id } = datos
-        
-        // Usar categoría por defecto (1) si no se especifica
-        const catId = categoria_id || 1;
-        
-        try {
-            const [result] = await DB.query(
-                'INSERT INTO productos (nombre, descripcion, precio, imagen, activo, categoria_id) VALUES (?, ?, ?, ?, 1, ?)',
-                [nombre, descripcion, precio, imagen, catId]
-            )
-            return result.insertId
-        } catch (error) {
-            throw new Error('Error al crear producto: ' + error.message)
-        }
-    }
-
-    static async actualizarProducto(id, datos) {
-        const { nombre, descripcion, precio, imagen } = datos
-        
-        try {
-            const [result] = await DB.query(
-                'UPDATE productos SET nombre = ?, descripcion = ?, precio = ?, imagen = ?, activo = 1 WHERE id = ?',
-                [nombre || null, descripcion || null, precio || null, imagen || null, id]
-            )
-            return result.affectedRows > 0
-        } catch (error) {
-            throw new Error('Error al actualizar producto: ' + error.message)
-        }
-    }
-
-    static async eliminarProducto(id) {
-        try {
-            const [result] = await DB.query(
-                'UPDATE productos SET activo = 0 WHERE id = ?',
-                [id]
-            )
-            return result.affectedRows > 0
-        } catch (error) {
-            throw new Error('Error al eliminar producto: ' + error.message)
-        }
     }
 
 }

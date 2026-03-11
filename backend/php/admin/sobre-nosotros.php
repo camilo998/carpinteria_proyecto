@@ -1,8 +1,17 @@
+<?php
+require_once '../config/db.php';
+
+// Verificar si el usuario está logueado y es admin
+if (!isset($_SESSION['usuario_id']) || $_SESSION['usuario_rol'] !== 'admin') {
+    header('Location: login.php');
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <link rel="icon" href="img/logo.jpg" type="image/jpg">
-    <link rel="stylesheet" href="../../css/sobre-nosotros.css">
+    <link rel="icon" href="../../../frontend/views/Carpintin-Don-Gusto/img/logo.jpg" type="image/jpg">
+    <link rel="stylesheet" href="../../../frontend/css/sobre-nosotros.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <meta charset="UTF-8">
@@ -14,8 +23,8 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="index.html">
-                    <img class="foto" src="img/logo.jpg" alt="Logotipo de Carpintín Don Gusto" style="height: 50px;">
+                <a class="navbar-brand" href="../../../frontend/views/Carpintin-Don-Gusto/index.html">
+                    <img class="foto" src="../../../frontend/views/Carpintin-Don-Gusto/img/logo.jpg" alt="Logotipo de Carpintín Don Gusto" style="height: 50px;">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar" aria-controls="mynavbar" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -23,13 +32,20 @@
                 <div class="collapse navbar-collapse" id="mynavbar">
                     <ul class="navbar-nav me-auto mb-2 mb-sm-0">
                         <li class="nav-item">
-                            <a class="nav-link" href="../../php/usuario/index.php">Productos</a>
+                            <a class="nav-link" href="index.php">Productos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="sobre-nosotros.html">Sobre Nosotros</a>
+                            <a class="nav-link" href="usuarios.php">Usuarios</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="sobre-nosotros.php">Sobre Nosotros</a>
                         </li>
                     </ul>
-                </div>
+                    <div class="d-flex align-items-center">
+                        <span class="text-white me-3">Admin: <?php echo htmlspecialchars($_SESSION['usuario_nombre']); ?></span>
+                        <a href="logout.php" class="btn btn-outline-light btn-sm">Cerrar Sesión</a>
+                    </div>
+            </div>
         </nav>
     </header>    
 
@@ -51,7 +67,7 @@
                     <div class="accordion-body">
                         <div class="row">
                             <div class="col-md-6">
-                                <img src="img/humano.jpg" alt="Nuestro equipo" class="img-fluid rounded mb-3" style="max-height: 250px; object-fit: cover; width: 100%;">
+                                <img src="../../../frontend/views/Carpintin-Don-Gusto/img/humano.jpg" alt="Nuestro equipo" class="img-fluid rounded mb-3" style="max-height: 250px; object-fit: cover; width: 100%;">
                             </div>
                             <div class="col-md-6">
                                 <p>En Carpintín Don Gusto, somos apasionados por la carpintería artesanal. Nos dedicamos a crear muebles y objetos de madera únicos, elaborados a mano con materiales sostenibles y diseños personalizados para cada cliente. Valoramos la calidad, la sostenibilidad y la colaboración cercana con nuestros clientes en cada proyecto.</p>
@@ -71,23 +87,23 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <h3 class="h12">Mesas Personalizadas</h3>
-                                <img src="img/mesa2.jpg" alt="Mesas personalizadas" class="img-fluid rounded mb-2" style="max-height: 180px; object-fit: cover; width: 100%;">
+                                <img src="../../../frontend/views/Carpintin-Don-Gusto/img/mesa2.jpg" alt="Mesas personalizadas" class="img-fluid rounded mb-2" style="max-height: 180px; object-fit: cover; width: 100%;">
                                 <p>Ya sea que busques una mesa de comedor robusta para reuniones familiares o una mesa de centro elegante para tu sala de estar, nosotros la creamos exactamente como la imaginas. Elige el tipo de madera, el diseño y los acabados, y nosotros nos encargamos del resto.</p>
                             </div>
                             <div class="col-md-6">
                                 <h3 class="h12">Estanterías y Almacenamiento</h3>
-                                <img src="img/mueble.jpg" alt="Estanterías" class="img-fluid rounded mb-2" style="max-height: 180px; object-fit: cover; width: 100%;">
+                                <img src="../../../frontend/views/Carpintin-Don-Gusto/img/mueble.jpg" alt="Estanterías" class="img-fluid rounded mb-2" style="max-height: 180px; object-fit: cover; width: 100%;">
                                 <p>Optimiza tu espacio con estanterías y unidades de almacenamiento feitas a medida. Ya sea una estantería de pared para exhibir tus libros y decoraciones o un armario para mantener todo organizado, trabajamos contigo para crear soluciones funcionales y estéticas.</p>
                             </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <h3 class="h12">Decoraciones para el Hogar</h3>
-                                <img src="img/espejo.jpg" alt="Decoraciones" class="img-fluid rounded mb-2" style="max-height: 180px; object-fit: cover; width: 100%;">
+                                <img src="../../../frontend/views/Carpintin-Don-Gusto/img/espejo.jpg" alt="Decoraciones" class="img-fluid rounded mb-2" style="max-height: 180px; object-fit: cover; width: 100%;">
                                 <p>Añade un toque especial a tu hogar con nuestras piezas decorativas. Desde marcos de fotos personalizados hasta esculturas de madera, cada artículo es una obra de arte que añadirá calidez y carácter a tu espacio.</p>
                             </div>
                             <div class="col-md-6">
                                 <h3 class="h12">Escritorios y Muebles de Oficina</h3>
-                                <img src="img/escritorio.webp" alt="Escritorios" class="img-fluid rounded mb-2" style="max-height: 180px; object-fit: cover; width: 100%;">
+                                <img src="../../../frontend/views/Carpintin-Don-Gusto/img/escritorio.webp" alt="Escritorios" class="img-fluid rounded mb-2" style="max-height: 180px; object-fit: cover; width: 100%;">
                                 <p>Desde escritorios funcionales para tu oficina en casa hasta estaciones de trabajo completas, creamos muebles que combinan ergonomía y diseño para mejorar tu productividad.</p>
                             </div>
                     </div>
@@ -104,23 +120,23 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <h3 class="h12">Consulta Personalizada</h3>
-                                <img src="img/Comedor-Rustico.jpg" alt="Consulta personalizada" class="img-fluid rounded mb-2" style="max-height: 180px; object-fit: cover; width: 100%;">
+                                <img src="../../../frontend/views/Carpintin-Don-Gusto/img/Comedor-Rustico.jpg" alt="Consulta personalizada" class="img-fluid rounded mb-2" style="max-height: 180px; object-fit: cover; width: 100%;">
                                 <p>Nos reunimos contigo para comprender tus necesidades y gustos. Puedes compartir tus ideas y nosotros te asesoramos en cada paso del proceso.</p>
                             </div>
                             <div class="col-md-6">
                                 <h3 class="h12">Fabricación Artesanal</h3>
-                                <img src="img/mueble2.jpg" alt="Fabricación artesanal" class="img-fluid rounded mb-2" style="max-height: 180px; object-fit: cover; width: 100%;">
+                                <img src="../../../frontend/views/Carpintin-Don-Gusto/img/mueble2.jpg" alt="Fabricación artesanal" class="img-fluid rounded mb-2" style="max-height: 180px; object-fit: cover; width: 100%;">
                                 <p>Nuestros artesanos altamente cualificados se encargan de dar vida a tus muebles utilizando materiales de alta calidad y técnicas de carpintería tradicionales.</p>
                             </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <h3 class="h12">Diseño a Medida</h3>
-                                <img src="img/mesa3.png" alt="Diseño a medida" class="img-fluid rounded mb-2" style="max-height: 180px; object-fit: cover; width: 100%;">
+                                <img src="../../../frontend/views/Carpintin-Don-Gusto/img/mesa3.png" alt="Diseño a medida" class="img-fluid rounded mb-2" style="max-height: 180px; object-fit: cover; width: 100%;">
                                 <p>Creamos diseños personalizados basados en tus especificaciones.Te proporcionamos bocetos y modelos para tu aprobación.</p>
                             </div>
                             <div class="col-md-6">
                                 <h3 class="h12">Entrega y Montaje</h3>
-                                <img src="img/mesita.jpg" alt="Entrega y montaje" class="img-fluid rounded mb-2" style="max-height: 180px; object-fit: cover; width: 100%;">
+                                <img src="../../../frontend/views/Carpintin-Don-Gusto/img/mesita.jpg" alt="Entrega y montaje" class="img-fluid rounded mb-2" style="max-height: 180px; object-fit: cover; width: 100%;">
                                 <p>Nos aseguramos de que tus muebles lleguen en perfecto estado y ofrecemos servicios de montaje para que todo quede exactamente como lo deseas.</p>
                             </div>
                     </div>
@@ -137,3 +153,4 @@
 
 </body>
 </html>
+

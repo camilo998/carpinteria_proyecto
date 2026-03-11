@@ -1,0 +1,126 @@
+/* Estilos para Login */
+body {
+    background-color: #FAF0E6;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-container {
+    background-color: #FFF8DC;
+    border: 2px solid #D2B48C;
+    border-radius: 10px;
+    padding: 40px;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.login-container h1 {
+    color: #8B4513;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+    margin-bottom: 10px;
+}
+
+.login-container p {
+    color: #A0522D;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.form-group label {
+    color: #8B4513;
+    font-weight: bold;
+}
+
+.form-control {
+    border: 1px solid #D2B48C;
+    background-color: #FAF0E6;
+}
+
+.form-control:focus {
+    border-color: #8B4513;
+    box-shadow: 0 0 0 0.2rem rgba(139, 69, 19, 0.25);
+}
+
+.login-btn {
+    background-color: #F4A460;
+    color: #8B4513;
+    border: 1px solid #8B4513;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    width: 100%;
+    font-weight: bold;
+}
+
+.login-btn:hover {
+    background-color: #CD853F;
+    color: white;
+}
+
+.demo-users {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #D2B48C;
+}
+
+.demo-users h3 {
+    color: #8B4513;
+    font-size: 16px;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.demo-user {
+    background-color: #FFF8DC;
+    border: 1px solid #D2B48C;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: 1px;
+}
+
+.demo-user:hover {
+    background-color: #D2B48C;
+}
+
+.demo-user strong {
+    color: #8B4513;
+}
+
+.error {
+    color: #c0392b;
+    background: #fadbd8;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    display: none;
+    text-align: center;
+}
+
+.loading {
+    color: #8B4513;
+    text-align: center;
+    display: none;
+    margin-bottom: 15px;
+}
+
+.nav-links {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.nav-links a {
+    color: #8B4513;
+    text-decoration: none;
+}
+
+.nav-links a:hover {
+    color: #CD853F;
+    text-decoration: underline;
+}
