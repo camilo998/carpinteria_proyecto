@@ -1,0 +1,220 @@
+/* Estilos para la página de productos del usuario */
+.text-container {
+    text-align: center;
+    padding: 20px;
+    background-color: #FFF8DC;
+    border: 2px solid #D2B48C;
+    border-radius: 10px;
+    margin: 20px auto;
+    max-width: 800px;
+    width: 90%;
+    box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+    .text-container {
+        width: 95%;
+        padding: 15px;
+        margin: 10px auto;
+    }
+    
+    .text-container h2 {
+        font-size: 20px;
+    }
+    
+    .text-container p {
+        font-size: 14px;
+    }
+}
+
+.text-container h2 {
+    color: #8B4513;
+    font-family: 'Arial', sans-serif;
+    margin-bottom: 15px;
+}
+
+.text-container p {
+    color: #666;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.producto-item {
+    margin-bottom: 20px;
+}
+
+.product-card {
+    background-color: #FFF8DC;
+    border: 2px solid #D2B48C;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.product-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #D2B48C;
+}
+
+@media (max-width: 768px) {
+    .product-card img {
+        height: 150px;
+    }
+}
+
+.product-card h5 {
+    color: #8B4513;
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.product-card p {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.product-card .price {
+    color: #8B4513;
+    font-weight: bold;
+    font-size: 20px;
+    margin: 10px 0;
+}
+
+.btn-comprar {
+    background-color: #F4A460;
+    color: #8B4513;
+    border: 1px solid #8B4513;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    width: 100%;
+    display: block;
+    box-sizing: border-box;
+}
+
+.btn-comprar:hover {
+    background-color: #CD853F;
+    color: white;
+}
+
+@media (max-width: 576px) {
+    .btn-comprar {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+    
+    .product-card h5 {
+        font-size: 16px;
+    }
+    
+    .product-card .price {
+        font-size: 18px;
+    }
+}
+
+/* Estilos para el formulario de compra modal */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.form-modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #FFF8DC;
+    border: 2px solid #D2B48C;
+    border-radius: 10px;
+    padding: 30px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    z-index: 1000;
+}
+
+.form-modal h2 {
+    color: #8B4513;
+    font-family: 'Arial', sans-serif;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.form-modal .form-label {
+    color: #8B4513;
+    font-weight: bold;
+}
+
+.form-modal .form-control {
+    border: 1px solid #D2B48C;
+    background-color: #FAF0E6;
+}
+
+.form-modal .form-control:focus {
+    border-color: #8B4513;
+    box-shadow: 0 0 0 0.2rem rgba(139, 69, 19, 0.25);
+}
+
+.form-modal .error {
+    color: #c0392b;
+    background: #fadbd8;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.form-modal .success {
+    color: #1e8449;
+    background: #d5f5e3;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.btn-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+/* Estilos para los filtros */
+.form-label {
+    color: #8B4513;
+    font-weight: bold;
+}
+
+.form-control {
+    border: 1px solid #D2B48C;
+    background-color: #FAF0E6;
+}
+
+.form-control:focus {
+    border-color: #8B4513;
+    box-shadow: 0 0 0 0.2rem rgba(139, 69, 19, 0.25);
+}

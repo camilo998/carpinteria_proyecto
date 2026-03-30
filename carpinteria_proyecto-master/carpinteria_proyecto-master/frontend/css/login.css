@@ -1,0 +1,94 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+header {
+    background-color: rgba(228, 182, 108, 0.954);
+}
+
+.navbar .nav-link:hover {
+    color: #D2691E;
+    font-weight: bold;
+}
+
+.carousel-inner {
+    height: 500px; /* Altura fija del carrusel */
+    margin-top: 1px;
+    overflow: hidden; /* Oculta partes no visibles */
+}
+
+.d-block {
+    width: 100%; /* Ocupa todo el ancho del carrusel */
+    height: 500px; /* Se adapta a la altura del carrusel */
+    object-fit: contain; /* Mantiene las proporciones originales sin recortar */
+    background-color: black; /* Fondo negro para destacar imágenes más pequeñas */
+}
+
+.frases {
+    margin-top: 2px;
+    margin-bottom: 5px;
+    background-color: rgb(108, 117, 125);
+}
+
+.container {
+    height: 20%;
+    display: flex; /* Usar flexbox para alinear los elementos */
+    flex-wrap: wrap; /* Permitir que los elementos se ajusten a la siguiente fila si no hay espacio */
+    margin: 0; /* Eliminar márgenes en el contenedor si es necesario */
+    padding: 0; /* Eliminar padding en el contenedor si es necesario */
+}
+
+.banner {
+    background-image: url('img/banner.jpg'); /* Puedes cambiar esta ruta por la imagen que desees */
+    background-size: cover;
+    background-position: center;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+    position: relative;
+    margin-bottom: 2px;
+}
+
+.banner-content {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.fondo{
+    box-sizing: border-box; /* Asegura un diseño consistente */
+    width: 100%;
+    height: 600px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    background-size: cover; /* Ajusta la imagen para cubrir el fondo */
+    background-attachment: fixed; /* Mantiene el fondo fijo al desplazarse */
+}
+
+
+/* Estilo de listas y enlaces */
+li {
+    display: inline-block;
+    padding: 0 8px; /* Espaciado horizontal */
+}
+a {
+    text-decoration: none;
+    color: brown;
+    font-size: 20px; /* Tamaño letra */
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/*.footer {
+    background-color: #f9f5f0;
+    color: #f9f5f0;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    margin-top: 20px;
+}*/

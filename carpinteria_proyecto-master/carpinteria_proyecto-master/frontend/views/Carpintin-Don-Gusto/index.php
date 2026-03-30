@@ -1,19 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <link rel="stylesheet" type="text/css" href="../../css/stile.css">
+    <link rel="icon" href="img/logo.jpg" type="image/jpg">
+    <link rel="stylesheet" href="../../css/stile.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>maderin</title>
+    <title>Carpintería Don Gusto</title>
 </head>
 <body>
   <header>
       <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
           <div class="container-fluid">
-              <a class="navbar-brand" href="index.html">
+              <a class="navbar-brand" href="index.php">
                   <img class="foto" src="img/logo.jpg" alt="Logotipo de Carpintín Don Gusto" style="height: 50px;">
               </a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar" aria-controls="mynavbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -21,17 +21,17 @@
               </button>
               <div class="collapse navbar-collapse" id="mynavbar">
                   <ul class="navbar-nav me-auto mb-2 mb-sm-0">
-                      
                       <li class="nav-item">
-                          <a class="nav-link" href="productos.html">Productos</a>
+                          <a class="nav-link" href="productos.php">Productos</a>
                       </li>
                       <li class="nav-item">
-                          <a class="nav-link" href="sobre-nosotros.html">Sobre Nosotros</a>
+                          <a class="nav-link" href="sobre-nosotros.php">Sobre Nosotros</a>
                       </li>
-                      
+                      <li class="nav-item">
+                          <a class="nav-link" href="login.php">Login</a>
+                      </li>
                   </ul>
               </div>
-          </div>
       </nav>
   </header>
 
@@ -46,7 +46,7 @@
           <button type="button" data-bs-target="#demo" data-bs-slide-to="4"></button>
           <button type="button" data-bs-target="#demo" data-bs-slide-to="5"></button>
       </div>
-
+<h1>sdfghjklkjhgfdsasdfghjkl</h1>
       <div class="carousel-inner">
           <div class="carousel-item active">
               <img src="img/espejo.jpg" alt="img0" class="d-block" style="width:100%">
@@ -61,12 +61,11 @@
               <img src="img/escritorio.webp" alt="img3" class="d-block" style="width:100%">
           </div>
           <div class="carousel-item">
-              <img src="img/escritoriodos..avif" alt="img4" class="d-block" style="width:100%">
+              <img src="img/mueble2.jpg" alt="img4" class="d-block" style="width:100%">
           </div>
           <div class="carousel-item">
             <img src="img/pcmejor.png" alt="img5" class="d-block" style="width:100%">
         </div>
-      </div>
 
       <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
           <span class="carousel-control-prev-icon"></span>
@@ -88,21 +87,9 @@
                           <p class="card-text">En Carpintín Don Gusto, no solo fabricamos muebles;</p>
                           <p class="card-text">¡Creamos piezas que cuentan historias y se convierten en parte de tu hogar!</p>
                           <p class="card-text">Déjanos ayudarte a transformar tus ideas en realidad.</p>
-                          <a href="https://wa.me/+573229189935?text=Hola,%20me%20interesa%20su%20servicio" class="btn btn-light" target="_blank">¡Contáctanos!</a>
+                          <a href="https://wa.me/+5732291895?text=Hola,%20me%20interesa%20su%20servicio" class="btn btn-light" target="_blank">¡Contáctanos!</a>
                       </div>
-                  </div>
               </div>
-          </div>
       </div>
-  </div>
-</div>
-  <footer class="footer">
-    
-    <div class="container-fluid p-4">
-      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.05);">
-          © 2020 Copyright:
-          <a class="text-reset fw-bold" href="https://mdbootstrap.com/">MDBootstrap.com</a>
-      </div>
-  </footer>
 </body>
 </html>
