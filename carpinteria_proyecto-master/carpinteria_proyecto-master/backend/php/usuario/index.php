@@ -127,6 +127,7 @@ if (isset($_GET['comprar']) && is_numeric($_GET['comprar'])) {
                         <span class="text-white me-3">Hola, <?php echo htmlspecialchars($_SESSION['usuario_nombre']); ?></span>
                         <a href="logout.php" class="btn btn-outline-light btn-sm">Cerrar Sesión</a>
                     </div>
+                </div>
             </div>
         </nav>
     </header>
@@ -186,7 +187,11 @@ if (isset($_GET['comprar']) && is_numeric($_GET['comprar'])) {
                             <h5><?php echo htmlspecialchars($prod['nombre']); ?></h5>
                             <p><?php echo htmlspecialchars($prod['descripcion'] ?? 'Producto de calidad artesanal'); ?></p>
                             <p class="price">$<?php echo number_format($prod['precio'], 0); ?></p>
-                            <button class="btn btn-comprar" onclick="abrirFormulario(<?php echo $prod['id']; ?>, '<?php echo htmlspecialchars($prod['nombre'], ENT_QUOTES); ?>', <?php echo $prod['precio']; ?>)">Comprar</button>
+                            <button class="btn btn-comprar me-2" onclick="abrirFormulario(<?php echo $prod['id']; ?>, '<?php echo htmlspecialchars($prod['nombre'], ENT_QUOTES); ?>', <?php echo $prod['precio']; ?>)">Comprar</button>
+                            <button class="btn btn-success btn-carrito position-relative" onclick="addToCart(<?php echo $prod['id']; ?>, '<?php echo htmlspecialchars($prod['nombre'], ENT_QUOTES); ?>', <?php echo $prod['precio']; ?>, '<?php echo addslashes($imagen); ?>')" title="Agregar al carrito">
+                                <i class="bi bi-cart-plus"></i> Carro
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.7em;">+</span>
+                            </button>
                         </div>
                     </div>
                     <?php endforeach; ?>
@@ -227,7 +232,7 @@ if (isset($_GET['comprar']) && is_numeric($_GET['comprar'])) {
             </div>
             <div class="mb-3">
                 <label for="fecha-entrega" class="form-label">¿Cuándo desea recibir el pedido?</label>
-                <input type="date" class="form-control" id="fecha-entrega" name="fecha-entrega" required value="<?php echo htmlspecialchars($_POST['fecha_entrega'] ?? ''); ?>">
+                <input type="date" class="form-control" id="fecha-entrega" name="fecha_entrega" required value="<?php echo htmlspecialchars($_POST['fecha_entrega'] ?? ''); ?>">
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Correo Electrónico:</label>
@@ -235,7 +240,7 @@ if (isset($_GET['comprar']) && is_numeric($_GET['comprar'])) {
             </div>
             <div class="mb-3">
                 <label for="metodo-pago" class="form-label">Método de Pago:</label>
-                <select class="form-control" id="metodo-pago" name="metodo-pago">
+                <select class="form-control" id="metodo-pago" name="metodo_pago">
                     <option value="efectivo">Efectivo</option>
                     <option value="tarjeta">Tarjeta</option>
                     <option value="transferencia">Transferencia Bancaria</option>
@@ -245,60 +250,251 @@ if (isset($_GET['comprar']) && is_numeric($_GET['comprar'])) {
         </form>
     </div>
 
-    <script>
-        let productoSeleccionado = null;
+    <!-- Fixed cart icon bottom-right corner -->
+    <div class="fixed-cart position-fixed bottom-0 end-0 p-3 z1050" style="z-index: 1050;">
+        <div class="cart-container position-relative">
+            <button id="cart-toggle" class="btn btn-comprar shadow-lg rounded-circle" style="width: 65px; height: 65px; display: flex; align-items: center; justify-content: center; font-size: 24px; border: 3px solid #D2B48C; box-shadow: 0 8px 25px rgba(139,69,19,0.4);" title="Ver carrito">
+                🛒
+                <span id="cart-count" class="badge bg-danger rounded-pill position-absolute top-0 start-100 translate-middle" style="font-size: 0.75; min-width: 20px; height: 20px;">0</span>
+            </button>
+        </div>
+    </div>
+<!-- Botón carrito fijo -->
+<div class="fixed-cart position-fixed bottom-0 end-0 p-3 z-1050">
+  <div class="cart-container position-relative">
+    <button id="cart-toggle" class="btn btn-comprar shadow-lg rounded-circle"
+      style="width: 65px; height: 65px; display: flex; align-items: center; justify-content: center; font-size: 24px; border: 3px solid #D2B48C; box-shadow: 0 8px 25px rgba(139,69,19,0.4);"
+      title="Ver carrito">
+      🛒
+      <span id="cart-count" class="badge bg-danger rounded-pill position-absolute top-0 start-100 translate-middle"
+        style="font-size: 0.75px; min-width: 20px; height: 20px;">0</span>
+    </button>
+  </div>
+</div>
 
-        // Mostrar formulario si hay un producto seleccionado
-        <?php if ($producto_seleccionado): ?>
-            productoSeleccionado = {
-                id: <?php echo $producto_seleccionado['id']; ?>,
-                nombre: '<?php echo htmlspecialchars($producto_seleccionado['nombre']); ?>',
-                precio: <?php echo $producto_seleccionado['precio']; ?>
-            };
-            document.getElementById('formulario-compra').style.display = 'block';
-            document.getElementById('overlay').style.display = 'block';
-        <?php endif; ?>
+<!-- Sidebar carrito -->
+<div id="cart-sidebar" class="cart-sidebar position-fixed top-0 z-1060"
+  style="transition: right 0.4s ease; width: 450px; height: 100vh; background: #FFF8DC; box-shadow: -5px 0 20px rgba(0,0,0,0.3);">
+  <div class="p-4" style="height: 100%; display: flex; flex-direction: column;">
+    <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom" style="border-color: #D2B48C;">
+      <h4 style="color: #8B4513; margin: 0;">🛒 Mi Carrito</h4>
+      <button id="close-sidebar" class="btn-close-sidebar" onclick="toggleSidebar()"
+        style="background: none; border: none; font-size: 30px; color: #8B4513; cursor: pointer; padding: 0 10px;">×</button>
+    </div>
+      <div id="cart-items-list" style="flex: 1; overflow-y: auto;"></div>
+      
+      <div id="checkout-section" style="display: none; margin-top: auto; padding-top: 20px; border-top: 2px solid #D2B48C;">
+        <div style="font-size: 16px; color: #666; margin-bottom: 10px;">Total: <span id="cart-total-checkout" style="font-size: 24px; font-weight: bold; color: #8B4513;">$0</span></div>
+        
+        <form id="checkout-form">
+          <div style="font-size: 14px; color: #666; margin-bottom: 10px;">Datos de entrega:</div>
+          <input type="text" id="checkout-nombre" placeholder="Nombre completo *" style="width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #D2B48C; border-radius: 5px;" required>
+          <input type="tel" id="checkout-telefono" placeholder="Teléfono *" style="width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #D2B48C; border-radius: 5px;" required>
+          <input type="email" id="checkout-email" placeholder="Email *" style="width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #D2B48C; border-radius: 5px;" required>
+          <input type="text" id="checkout-direccion" placeholder="Dirección *" style="width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #D2B48C; border-radius: 5px;" required>
+          <input type="date" id="checkout-fecha" style="width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #D2B48C; border-radius: 5px;" required min="<?php echo date('Y-m-d', strtotime('+1 day')); ?>">
+          <select id="checkout-pago" style="width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #D2B48C; border-radius: 5px;">
+            <option value="efectivo">Efectivo</option>
+            <option value="tarjeta">Tarjeta</option>
+            <option value="transferencia">Transferencia Bancaria</option>
+          </select>
+          <textarea id="checkout-nota" placeholder="Notas (opcional)" style="width: 100%; padding: 8px; margin-bottom: 15px; border: 1px solid #D2B48C; border-radius: 5px; resize: vertical; height: 60px;"></textarea>
+          <button class="btn btn-comprar w-100 mb-2" onclick="procesarCarrito()" type="button" style="background: #F4A460; color: #8B4513; border: 1px solid #8B4513;">Confirmar Pedido</button>
+          <button type="button" onclick="toggleCheckout()" style="width: 100%; background: #ddd; color: #666; border: 1px solid #ccc; padding: 8px; border-radius: 5px;">Cancelar</button>
+        </form>
+      </div>
+      
+      <div id="total-section" style="margin-top: auto; padding-top: 20px; border-top: 2px solid #D2B48C; text-align: center; background: #FAF0E6; padding: 20px; border-radius: 10px;">
+        <div style="font-size: 16px; color: #666; margin-bottom: 10px;">Total: <span id="cart-total">$0</span></div>
+        <button class="btn btn-comprar w-100" onclick="toggleCheckout()" style="background: #F4A460; color: #8B4513; border: 1px solid #8B4513;">Ir a Pagar</button>
+      </div>
+    </div>
+  </div>
+  <div class="cart-overlay position-absolute top-0 left-0 w-100 h-100 bg-dark opacity-50" onclick="toggleSidebar()"
+    style="z-index: -1;"></div>
+</div>
 
-        function abrirFormulario(id, nombre, precio) {
-            productoSeleccionado = { id, nombre, precio };
-            document.getElementById('producto_id').value = id;
-            document.getElementById('formulario-compra').style.display = 'block';
-            document.getElementById('overlay').style.display = 'block';
-        }
+<style>
+  /* Sidebar oculto por defecto */
+  .cart-sidebar {
+    right: -450px;
+  }
 
-        function cerrarFormulario() {
-            document.getElementById('formulario-compra').style.display = 'none';
-            document.getElementById('overlay').style.display = 'none';
-            // Limpiar URL
-            if (window.location.search.includes('comprar')) {
-                window.location.href = 'index.php';
-            }
-        }
+  /* Sidebar visible */
+  .cart-sidebar.show {
+    right: 0;
+  }
+</style>
 
-        // Cerrar formulario al hacer clic en el overlay
-        document.getElementById('overlay').addEventListener('click', function() {
-            cerrarFormulario();
-        });
+<script>
+  let cart = [];
 
-        function filtrarProductos() {
-            const busqueda = document.getElementById('buscar-producto').value.toLowerCase();
-            const categoria = document.getElementById('filtro-categoria').value;
-            const productos = document.querySelectorAll('.producto-item');
+  function getCartKey() {
+    return 'carrito_<?php echo $_SESSION["usuario_id"]; ?>';
+  }
 
-            productos.forEach(producto => {
-                const nombre = producto.dataset.nombre;
-                const prodCategoria = producto.dataset.categoria;
+  function getCart() {
+    return JSON.parse(localStorage.getItem(getCartKey()) || '[]');
+  }
 
-                const coincideBusqueda = nombre.includes(busqueda);
-                const coincideCategoria = !categoria || prodCategoria === categoria;
+  function saveCart() {
+    localStorage.setItem(getCartKey(), JSON.stringify(cart));
+  }
+   function removeFromCart(index) {
+    cart.splice(index, 1);
+    saveCart();
+    updateCartUI();
+  }
+function addToCart(id, nombre, precio, imagen) {
+    const existing = cart.find(item => item.id == id);
+    if (existing) {
+      existing.cantidad++;
+    } else {
+cart.push({ id, nombre, precio, imagen, cantidad: 1 });
+    }
+    saveCart();
+    updateCartUI();
+    showToast('¡Producto agregado al carrito!');
+  }
 
-                if (coincideBusqueda && coincideCategoria) {
-                    producto.style.display = 'block';
-                } else {
-                    producto.style.display = 'none';
-                }
-            });
-        }
-    </script>
+  function removeFromCart(index) {
+    cart.splice(index, 1);
+    saveCart();
+    updateCartUI();
+  }
+
+  function updateQuantity(index, delta) {
+    cart[index].cantidad += delta;
+    if (cart[index].cantidad <= 0) {
+      removeFromCart(index);
+    } else {
+      saveCart();
+      updateCartUI();
+    }
+  }
+
+  function updateCartUI() {
+    document.getElementById('cart-count').textContent = cart.reduce((sum, item) => sum + item.cantidad, 0) || 0;
+    const itemsList = document.getElementById('cart-items-list');
+    const totalEl = document.getElementById('cart-total');
+    const checkoutTotal = document.getElementById('cart-total-checkout');
+
+    if (cart.length === 0) {
+      itemsList.innerHTML = '<div style="text-align: center; color: #8B4513; padding: 40px 20px; font-style: italic;">Tu carrito está vacío 🛒</div>';
+    } else {
+      itemsList.innerHTML = cart.map((item, index) => `
+        <div style="display: flex; align-items: center; padding: 15px 0; border-bottom: 1px solid #eee; gap: 15px;">
+          <img src="${item.imagen}" alt="${item.nombre}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;" onerror="this.src='../../../frontend/views/Carpintin-Don-Gusto/img/logo.jpg';this.onerror=null;">
+          <div style="flex: 1;">
+            <div style="font-weight: 600; color: #8B4513; margin-bottom: 5px; font-size: 15px;">${item.nombre}</div>
+            <div style="color: #8B4513; font-weight: bold;">$${item.precio.toLocaleString()}</div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px; background: #FAF0E6; padding: 8px; border-radius: 25px; border: 1px solid #D2B48C;">
+            <button onclick="updateQuantity(${index}, -1)" style="width: 30px; height: 30px; background: #F4A460; color: #8B4513; border: none; border-radius: 50%; cursor: pointer; font-weight: bold;">-</button>
+            <span style="min-width: 25px; text-align: center; font-weight: bold; color: #8B4513;">${item.cantidad}</span>
+            <button onclick="updateQuantity(${index}, 1)" style="width: 30px; height: 30px; background: #F4A460; color: #8B4513; border: none; border-radius: 50%; cursor: pointer; font-weight: bold;">+</button>
+          </div>
+          <button onclick="removeFromCart(${index})" style="background: #dc3545; color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-size: 12px;">Eliminar</button>
+        </div>
+      `).join('');
+    }
+    totalEl.textContent = '$' + cart.reduce((sum, item) => sum + (item.precio * item.cantidad), 0).toLocaleString();
+    checkoutTotal.textContent = totalEl.textContent;
+  }
+
+  function toggleCheckout() {
+    const checkoutSection = document.getElementById('checkout-section');
+    const totalSection = document.getElementById('total-section');
+    const cartItems = getCart();
+    
+    if (checkoutSection.style.display === 'none' || !checkoutSection.style.display) {
+      if (cartItems.length === 0) {
+        alert('Tu carrito está vacío');
+        return;
+      }
+      document.getElementById('cart-total').textContent = document.getElementById('cart-total-checkout').textContent;
+      checkoutSection.style.display = 'block';
+      totalSection.style.display = 'none';
+    } else {
+      checkoutSection.style.display = 'none';
+      totalSection.style.display = 'block';
+    }
+  }
+
+  function procesarCarrito() {
+    const cartItems = getCart();
+    if (cartItems.length === 0) {
+      alert('Tu carrito está vacío');
+      return;
+    }
+
+    // Validar formulario
+    const nombre = document.getElementById('checkout-nombre').value.trim();
+    const telefono = document.getElementById('checkout-telefono').value.trim();
+    const email = document.getElementById('checkout-email').value.trim();
+    const direccion = document.getElementById('checkout-direccion').value.trim();
+    const fecha = document.getElementById('checkout-fecha').value;
+    
+    if (!nombre || !telefono || !email || !direccion || !fecha) {
+      alert('Por favor completa todos los campos requeridos');
+      return;
+    }
+
+    const data = {
+      cart: cartItems,
+      nombre: nombre,
+      telefono: telefono,
+      email: email,
+      direccion: direccion,
+      fecha_entrega: fecha,
+      metodo_pago: document.getElementById('checkout-pago').value,
+      nota: document.getElementById('checkout-nota').value.trim()
+    };
+
+    fetch('procesar_carrito.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(result => {
+      if (result.success) {
+        alert(result.message);
+        localStorage.removeItem(getCartKey());
+        cart = [];
+        updateCartUI();
+        document.getElementById('checkout-section').style.display = 'none';
+        document.getElementById('total-section').style.display = 'block';
+        toggleSidebar();
+      } else {
+        alert('Error: ' + result.error);
+      }
+    })
+    .catch(error => {
+      alert('Error de conexión: ' + error.message);
+    });
+  }
+
+  function toggleSidebar() {
+  console.log('toggleSidebar called');
+  const sidebar = document.getElementById('cart-sidebar');
+  sidebar.classList.toggle('show');
+  console.log('sidebar show class:', sidebar.classList.contains('show'));
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  cart = getCart();
+  updateCartUI();
+
+  document.getElementById('cart-toggle').addEventListener('click', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleSidebar();
+  });
+
+  document.getElementById('close-sidebar').addEventListener('click', toggleSidebar);
+  document.querySelector('.cart-overlay').addEventListener('click', toggleSidebar);
+});
+</script>
 </body>
 </html>
