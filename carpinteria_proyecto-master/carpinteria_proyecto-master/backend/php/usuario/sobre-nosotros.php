@@ -7,6 +7,7 @@ require_once '../config/db.php';
     <link rel="icon" href="../../../frontend/views/Carpintin-Don-Gusto/img/logo.jpg" type="image/jpg">
     <link rel="stylesheet" href="../../../frontend/css/sobre-nosotros.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../frontend/css/stile.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,13 +15,13 @@ require_once '../config/db.php';
 </head>
 <body>
     
- <header>
+<header>
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="index.html">
-                <img class="foto" src="../../../frontend/views/Carpintin-Don-Gusto/img/logo.jpg" alt="Logotipo de Carpintín Don Gusto" style="height: 50px;">
+            <a href="index.html">
+                <img src="./img/logo.jpg" alt="Logo Carpintería Don Gusto" style="height: 50px;">
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar" aria-controls="mynavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="mynavbar">
@@ -28,27 +29,26 @@ require_once '../config/db.php';
                     <li class="nav-item">
                         <a class="nav-link" href="index.php">Productos</a>
                     </li>
-                    
                     <li class="nav-item">
-                        <a class="nav-link" href="sobre-nosotros.php">Sobre Nosotros</a>
+                        <a class="nav-link active" href="sobre-nosotros.php">Sobre Nosotros</a>
                     </li>
                 </ul>
                 <div class="d-flex align-items-center">
-                    <span class="text-white me-3">Admin: <?php echo htmlspecialchars($_SESSION['usuario_nombre']); ?></span>
+                    <span class="text-white me-3">Hola, <?php echo htmlspecialchars($_SESSION['usuario_nombre']); ?></span>
                     <a href="logout.php" class="btn btn-outline-light btn-sm">Cerrar Sesión</a>
                 </div>
-            </div> <!-- cierre collapse navbar -->
-        </div> <!-- cierre container-fluid -->
+            </div>
+        </div>
     </nav>
 </header>
 
-<div class="container mt-1">
+<div class="container mt-1 mx-auto" style="max-width: 50vw;">
     <h1 class="h12">Bienvenido a Carpintín Don Gusto</h1>
     <p>En Carpintín Don Gusto, entendemos que cada hogar es único y que cada pieza de mobiliario debe reflejar la personalidad y las necesidades de nuestros clientes.</p>
     <p>Nos especializamos en la creación de muebles artesanales de alta calidad, diseñados específicamente para satisfacer los gustos y requisitos individuales de cada cliente.</p>
 </div>
 
-<div class="container mt-1">
+<div class="container mt-1 mx-auto" style="max-width: 50vw;">
     <div class="accordion" id="accordionExample">
 
         <!-- Item 1 -->
@@ -62,8 +62,8 @@ require_once '../config/db.php';
                 <div class="accordion-body">
                     <div class="row">
                         <div class="col-md-6">
-                            <p>En Carpintín Don Gusto, somos apasionados por la carpintería artesanal...</p>
-                            <p>Nuestra misión es ayudarte a transformar tus ideas en realidad...</p>
+                            <p>En Carpintín Don Gusto, somos apasionados por la carpintería artesanal. Con años de experiencia en el arte de la madera, nuestro equipo de artesanos altamente cualificados crea piezas únicas que combinan tradición artesanal con diseño contemporáneo.</p>
+                            <p>Nuestra misión es ayudarte a transformar tus ideas en realidad, creando muebles que no solo son funcionales, sino también piezas de arte que perduran por generaciones.</p>
                         </div>
                     </div>
                 </div>
@@ -83,24 +83,24 @@ require_once '../config/db.php';
                         <div class="col-md-6">
                             <h3 class="h12">Mesas Personalizadas</h3>
                             <img src="../../../frontend/views/Carpintin-Don-Gusto/img/mesa2.jpg" alt="Mesas personalizadas" class="img-fluid rounded mb-2" style="max-height: 180px; object-fit: cover; width: 100%;">
-                            <p>Ya sea que busques una mesa de comedor robusta...</p>
+                            <p>Ya sea que busques una mesa de comedor robusta o una mesa de centro elegante, nuestras mesas están hechas a medida para tu espacio.</p>
                         </div>
                         <div class="col-md-6">
                             <h3 class="h12">Estanterías y Almacenamiento</h3>
                             <img src="../../../frontend/views/Carpintin-Don-Gusto/img/mueble.jpg" alt="Estanterías" class="img-fluid rounded mb-2" style="max-height: 180px; object-fit: cover; width: 100%;">
-                            <p>Optimiza tu espacio con estanterías...</p>
+                            <p>Optimiza tu espacio con estanterías funcionales y hermosas que se adaptan perfectamente a tus necesidades de almacenamiento.</p>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <h3 class="h12">Decoraciones para el Hogar</h3>
                             <img src="../../../frontend/views/Carpintin-Don-Gusto/img/espejo.jpg" alt="Decoraciones" class="img-fluid rounded mb-2" style="max-height: 180px; object-fit: cover; width: 100%;">
-                            <p>Añade un toque especial a tu hogar...</p>
+                            <p>Añade un toque especial a tu hogar con nuestros espejos, marcos y piezas decorativas únicas.</p>
                         </div>
                         <div class="col-md-6">
                             <h3 class="h12">Escritorios y Muebles de Oficina</h3>
                             <img src="../../../frontend/views/Carpintin-Don-Gusto/img/escritorio.webp" alt="Escritorios" class="img-fluid rounded mb-2" style="max-height: 180px; object-fit: cover; width: 100%;">
-                            <p>Desde escritorios funcionales para tu oficina...</p>
+                            <p>Desde escritorios funcionales para tu oficina en casa hasta estaciones de trabajo completas, creamos muebles que combinan ergonomía y diseño para mejorar tu productividad.</p>
                         </div>
                     </div>
                 </div>
@@ -120,39 +120,40 @@ require_once '../config/db.php';
                         <div class="col-md-6">
                             <h3 class="h12">Consulta Personalizada</h3>
                             <img src="../../../frontend/views/Carpintin-Don-Gusto/img/Comedor-Rustico.jpg" alt="Consulta personalizada" class="img-fluid rounded mb-2" style="max-height: 180px; object-fit: cover; width: 100%;">
-                            <p>Nos reunimos contigo para comprender tus necesidades...</p>
+                            <p>Nos reunimos contigo para comprender tus necesidades y preferencias específicas, garantizando que cada pieza sea perfecta para tu espacio.</p>
                         </div>
                         <div class="col-md-6">
                             <h3 class="h12">Fabricación Artesanal</h3>
                             <img src="../../../frontend/views/Carpintin-Don-Gusto/img/mueble2.jpg" alt="Fabricación artesanal" class="img-fluid rounded mb-2" style="max-height: 180px; object-fit: cover; width: 100%;">
-                            <p>Nuestros artesanos altamente cualificados...</p>
+                            <p>Nuestros artesanos altamente cualificados trabajan cada pieza con dedicación y precisión, utilizando técnicas tradicionales y maderas de la más alta calidad.</p>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <h3 class="h12">Diseño a Medida</h3>
                             <img src="../../../frontend/views/Carpintin-Don-Gusto/img/mesa3.png" alt="Diseño a medida" class="img-fluid rounded mb-2" style="max-height: 180px; object-fit: cover; width: 100%;">
-                            <p>Creamos diseños personalizados basados en tus especificaciones...</p>
+                            <p>Creamos diseños personalizados basados en tus especificaciones exactas, desde las dimensiones hasta el tipo de madera y acabados.</p>
                         </div>
                         <div class="col-md-6">
                             <h3 class="h12">Entrega y Montaje</h3>
                             <img src="../../../frontend/views/Carpintin-Don-Gusto/img/mesa_de.webp" alt="Entrega y montaje" class="img-fluid rounded mb-2" style="max-height: 180px; object-fit: cover; width: 100%;">
-                            <p>Nos aseguramos de que tus muebles lleguen en perfecto estado...</p>
+                            <p>Nos aseguramos de que tus muebles lleguen en perfecto estado y ofrecemos servicio de montaje profesional para tu tranquilidad.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-    </div> <!-- cierre accordion -->
-</div> <!-- cierre container -->   
-    <p class="piramide">
-        En Carpintín Don Gusto,<br>
-        no solo fabricamos muebles;<br>
-        creamos piezas que cuentan historias<br>
-        y se convierten en parte de tu hogar.<br>
-        ¡Déjanos ayudarte a transformar tus ideas en realidad!
-    </p>
+    </div>
+</div>
+
+<p class="piramide">
+    En Carpintín Don Gusto,<br>
+    no solo fabricamos muebles;<br>
+    creamos piezas que cuentan historias<br>
+    y se convierten en parte de tu hogar.<br>
+    ¡Déjanos ayudarte a transformar tus ideas en realidad!
+</p>
 
 </body>
 </html>

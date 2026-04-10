@@ -23,24 +23,30 @@ if (!isset($_SESSION['usuario_id']) || $_SESSION['usuario_rol'] !== 'admin') {
 <header>
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="index.html">
-                <img class="foto" src="../../../frontend/views/Carpintin-Don-Gusto/img/logo.jpg" alt="Logotipo de Carpintín Don Gusto" style="height: 50px;">
+            <a href="index.php">
+                <img src="../usuario/img/logo.jpg" alt="Logo Carpintería Don Gusto" style="height: 50px;">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar" aria-controls="mynavbar" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="mynavbar">
                 <ul class="navbar-nav me-auto mb-2 mb-sm-0">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.php">Productos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="usuarios.php">Usuarios</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="sobre-nosotros.php">Sobre Nosotros</a>
-                    </li>
-                </ul>
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.php">Productos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="usuarios.php">Usuarios</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="data.php">Info de Venta</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="dashboard_productos.php">dashboard productos</a>
+                            <li class="nav-item">
+                                <a class="nav-link" href="sobre-nosotros.php">Sobre Nosotros</a>
+                            </li>
+                
+                        </ul>
                 <div class="d-flex align-items-center">
                     <span class="text-white me-3">Admin: <?php echo htmlspecialchars($_SESSION['usuario_nombre']); ?></span>
                     <a href="logout.php" class="btn btn-outline-light btn-sm">Cerrar Sesión</a>

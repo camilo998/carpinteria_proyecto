@@ -43,6 +43,32 @@ try {
         $cliente_id = $pdo->lastInsertId();
     }
 
+    // Verificar y reservar stock
+    $stock_errors = [];
+    foreach ($cart as $item) {
+        $stmt = $pdo->prepare("SELECT stock FROM productos WHERE id = ? AND activo = 1");
+        $stmt->execute([$item['id']]);
+        $current_stock = $stmt->fetchColumn();
+        
+        if ($current_stock === false || $current_stock < $item['cantidad']) {
+            $stmt = $pdo->prepare("SELECT nombre FROM productos WHERE id = ?");
+            $stmt->execute([$item['id']]);
+            $nombre = $stmt->fetchColumn();
+            $stock_errors[] = "Producto '$nombre': Stock insuficiente ($current_stock < {$item['cantidad']})";
+        }
+    }
+    
+    if (!empty($stock_errors)) {
+        echo json_encode(['success' => false, 'error' => 'Stock insuficiente: ' . implode('; ', $stock_errors)]);
+        exit;
+    }
+    
+    // Reservar stock (subtract)
+    foreach ($cart as $item) {
+        $stmt = $pdo->prepare("UPDATE productos SET stock = GREATEST(0, stock - ?) WHERE id = ?");
+        $stmt->execute([$item['cantidad'], $item['id']]);
+    }
+
     // Calcular totales
     $subtotal = 0;
     foreach ($cart as $item) {

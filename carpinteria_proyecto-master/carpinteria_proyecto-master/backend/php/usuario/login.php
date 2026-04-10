@@ -170,7 +170,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </style>
 </head>
 <body>
-    <div class="login-container">
+<div class="login-container">
+
         <h1>🪵 Carpintería Don Gusto</h1>
         <p>Inicia sesión para comprar productos</p>
         
