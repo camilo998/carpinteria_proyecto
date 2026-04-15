@@ -195,7 +195,7 @@ $pedidos = $stmt->fetchAll();
                                 </td>
                                 <td><strong class="text-success">$<?php echo number_format($pedido['total'], 0); ?></strong></td>
                                 <td>
-                                    <span class="badge bg-secondary"><?php echo strtoupper($pedido['metodo_pago']); ?></span>
+<span class="badge bg-secondary"><?php echo mb_strtoupper($pedido['metodo_pago'], 'UTF-8'); ?></span>
                                 </td>
                                 <td>
                                     <span class="badge" style="background-color: <?php echo $pedido['estado_color']; ?> !important;">
