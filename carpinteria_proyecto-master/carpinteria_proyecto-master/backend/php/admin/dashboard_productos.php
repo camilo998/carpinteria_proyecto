@@ -65,7 +65,7 @@ $productos_recientes = $stmt->fetchAll();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Productos - Carpintería Don Gusto</title>
-    <link rel="icon" href="../../../frontend/views/Carpintin-Don-Gusto/img/logo.jpg" type="image/jpg">
+    <link rel="icon" href="./img_productos/logo.jpg" type="image/jpg">
     <link rel="stylesheet" href="../../../frontend/css/stile.css">
     <link rel="stylesheet" href="../../../frontend/css/producto_estile.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -123,7 +123,7 @@ $productos_recientes = $stmt->fetchAll();
         <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
             <div class="container-fluid">
                 <a href="index.html">
-                    <img src="../usuario/img/logo.jpg" alt="Logo Carpintería Don Gusto" style="height: 50px;">
+<img src="./img_productos/logo.jpg" alt="Logo Carpintería Don Gusto" style="height: 50px;">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
                     <span class="navbar-toggler-icon"></span>
@@ -252,14 +252,27 @@ $productos_recientes = $stmt->fetchAll();
                     <tbody>
                         <?php foreach ($productos_recientes as $prod): ?>
                         <?php 
-                        $ruta_img = !empty($prod['imagen']) ? '../../../frontend/views/Carpintin-Don-Gusto/img/' . $prod['imagen'] : '../../../frontend/views/Carpintin-Don-Gusto/img/logo.jpg';
+                        $imagen = $prod['imagen'] ?? '';
+                        $ruta_base = '../../../frontend/views/Carpintin-Don-Gusto/';
+                        
+                        if (!empty($imagen)) {
+                            if (str_starts_with($imagen, 'http')) {
+                                $ruta_img = '';
+                            } else {
+                                $ruta_img = $ruta_base;
+                            }
+                            $imagen = $ruta_img . $imagen;
+                        } else {
+                            $imagen = '/frontend/views/Carpintin-Don-Gusto/img/logo.jpg';
+                        }
+                        
                         $stock_class = ($prod['stock'] ?? 0) == 0 ? 'no-stock' : (($prod['stock'] ?? 0) < 5 ? 'stock-bajo' : 'stock-ok');
                         ?>
                         <tr data-nombre="<?php echo strtolower($prod['nombre']); ?>" 
                             data-categoria="<?php echo strtolower($prod['categoria'] ?? ''); ?>" 
                             data-stock="<?php echo $prod['stock'] ?? 0; ?>">
                             <td>
-                                <img src="<?php echo htmlspecialchars($ruta_img); ?>" alt="<?php echo htmlspecialchars($prod['nombre']); ?>" onerror="this.src='../../../frontend/views/Carpintin-Don-Gusto/img/logo.jpg'">
+                                <img src="<?php echo htmlspecialchars($imagen); ?>" alt="<?php echo htmlspecialchars($prod['nombre']); ?>" onerror="this.src='/frontend/views/Carpintin-Don-Gusto/img/logo.jpg'">
                             </td>
                             <td><strong><?php echo htmlspecialchars($prod['nombre']); ?></strong>
                                 <?php if ($prod['descripcion']): ?><br><small><?php echo substr($prod['descripcion'], 0, 80); ?>...</small><?php endif; ?>
