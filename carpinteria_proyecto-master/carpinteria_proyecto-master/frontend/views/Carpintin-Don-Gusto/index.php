@@ -47,7 +47,6 @@
           <button type="button" data-bs-target="#demo" data-bs-slide-to="4"></button>
           <button type="button" data-bs-target="#demo" data-bs-slide-to="5"></button>
       </div>
-<h1>sdfghjklkjhgfdsasdfghjkl</h1>
       <div class="carousel-inner">
           <div class="carousel-item active">
               <img src="img/espejo.jpg" alt="img0" class="d-block" style="width:100%">
